@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Linq;
+using System.Web.Mvc;
+using Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models;
 using System.IO;
 using System.Text;
 
@@ -15,13 +16,38 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         public static Dictionary<char, double> dicContadorDeCaracteres = new Dictionary<char, double>();
         public static Dictionary<char, string> dicRecorridos = new Dictionary<char, string>();
         const int bufferLenght = 500;
+        public string Exito { get; set; }
+        public Exception error { get; set; }
+   
+        public string Ruta { get; set; }
+        public string NombreDelArchivo { get; set; }
+        public string NombreDeDescarga { get; set; }
+        public string RutaDeDescarga { get; set; }
 
-        public void Leer()
+        public void CargarArchivo(string ruta, HttpPostedFileBase file, string rutaDeDescarga)
+        {
+            try
+            {
+                file.SaveAs(ruta);
+                this.Exito = "Se ha subido el archivo";
+                Ruta = ruta;
+                this.RutaDeDescarga = rutaDeDescarga;
+                this.NombreDelArchivo = file.FileName;
+                Leer(ruta);
+                
+            }
+            catch(Exception er)
+            {
+                this.error = er;
+            }
+        }
+
+        public void Leer(string RutaDeArchivo)
         {
             string aux;
 
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/mgrt9/desktop/PHuff.txt", FileMode.Open))
+            using (var file = new FileStream(RutaDeArchivo, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -139,7 +165,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
             char[] aux;
             string auxiliarParaCaracteres;
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/mgrt9/desktop/PHuff.txt", FileMode.Open))
+            using (var file = new FileStream(Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -178,7 +204,9 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         {
 
             //var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/mgrt9/desktop/archivo2.txt", FileMode.OpenOrCreate))
+
+            this.RutaDeDescarga += this.NombreDelArchivo;
+            using (var file = new FileStream(RutaDeDescarga, FileMode.Create))
             {
                 using (var texto = new StreamWriter(file))
                 {
@@ -191,7 +219,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
             }
 
 
-            using (var file = new FileStream("C:/Users/mgrt9/desktop/archivo2.txt", FileMode.Append))
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.Append))
             {
 
                 using (var writer = new BinaryWriter(file))
@@ -231,6 +259,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                     }
                 }
             }
+         
         }
        
     }
