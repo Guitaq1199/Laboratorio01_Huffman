@@ -7,10 +7,18 @@
 
 <h2 class="text-danger">@ViewBag.Error</h2>
 <h2 class="text-success">@ViewBag.Correcto</h2>
+<script>
+    function DirrecionComprimir() {
+        document.location.href = "/Huffman/Iniciar";
+    }
 
+</script>
 <form method="post" enctype="multipart/form-data">
     <input type="file" name="file" />
     <button type="submit">Subir</button>
 </form>
+
+<input type="button" name="but1" value="Comprimir" onclick="DirrecionComprimir()" />
+
 
 

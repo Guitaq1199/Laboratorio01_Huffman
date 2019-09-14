@@ -34,11 +34,16 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
                 ViewBag.Error = modelo.error;
                 modelo.AgregarNodos();
                 modelo.LeerArchivoParaComprimir();
-              
-                rutaDeDescarga += modelo.NombreDelArchivo;
-                return File(rutaDeDescarga, "application/txt","Comprimido"+ modelo.NombreDelArchivo);
-            // return RedirectToAction("/Descargar",modelo.NombreDelArchivo);
+                string[] aux = modelo.NombreDelArchivo.Split('.');
+                rutaDeDescarga += aux[0]+ ".huff";
+                
+                return File(rutaDeDescarga, "application/huff","Comprimido"+ aux[0]+".huff");
+               //  return RedirectToAction("/Descargar",modelo.NombreDelArchivo);
 
+            //}
+            //else
+            //{
+            //    return RedirectToAction("/inicio");
             //}
 
             //return View();
