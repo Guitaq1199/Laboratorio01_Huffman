@@ -3,7 +3,7 @@
     ViewBag.Title = "Iniciar";
 }
 
-<h2>Iniciar</h2>
+
 
 <script>
     function DirrecionComprimir()
@@ -12,4 +12,50 @@
     }
 
 </script>
-<input type="button" name="but1" value="Comprimir" onclick="DirrecionComprimir()" />
+
+<style>
+     #Menu {
+            background-color: white;
+            color: black;
+            width: 25%;
+            height: 50%;
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            border-radius: 6px;
+            border: 2px solid black;
+        }
+        .bt {
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 14px;
+            color: #000000;
+            background-color: transparent;
+            border-width: 3px;
+            border-style: solid;
+            border-color: #000000;
+            width: 65%;
+            height: 10%;
+            text-align: center;
+        }
+        .bt:hover{
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 14px;
+            color: #000000;
+            background-color: black;
+            border-width: 3px;
+            border-style: solid;
+            border-color: white;
+            color:white;
+            width: 65%;
+            height: 10%;
+            text-align: center;
+        }
+</style>
+<div id="Menu">
+    <br />
+    <center><h2 style="text-align:center">Huffman</h2></center><br /><br />
+    <center> <input type="button" name="but1" value="Comprimir" onclick="DirrecionComprimir()" class="bt" /></center><br /><br />
+    <center> <input type="button" name="butDescompresion" value="Descomprimir" onclick="DirrecionComprimir()" class="bt" /></center>
+</div>
