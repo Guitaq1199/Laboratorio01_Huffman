@@ -126,6 +126,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ArbolHuff.cs" />
+    <Compile Include="Models\ClaseLZW.cs" />
     <Compile Include="Models\Nodo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
