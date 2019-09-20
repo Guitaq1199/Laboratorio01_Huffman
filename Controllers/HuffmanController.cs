@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models;
 using System.IO;
-using System.Linq;
+
 
 namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
 {
@@ -20,12 +20,22 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         {
             return View();
         }
+        public ActionResult ArchivoLZW()
+        {
+            return View();
+        }
+        public FileResult Descargar(string nombreDescarga)
+        {
+            string RutaDescarga = Server.MapPath("~/Comprimidos/");
+            RutaDescarga += nombreDescarga;
+            return File(RutaDescarga, "application/huff", nombreDescarga);
+        }
         [HttpPost]
-        public FileResult CargaDeArchivo(HttpPostedFileBase file)
+        public ActionResult CargaDeArchivo(HttpPostedFileBase file)
         {
             ArbolHuff modelo = new ArbolHuff();
-            //if (file != null)
-            //{
+            if (file != null)
+            {
                 string ruta = Server.MapPath("~/Archivos/");
                 string rutaDeDescarga = Server.MapPath("~/Comprimidos/");
                 ruta += file.FileName;
@@ -36,23 +46,37 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
                 modelo.LeerArchivoParaComprimir();
                 string[] aux = modelo.NombreDelArchivo.Split('.');
                 rutaDeDescarga += aux[0]+ ".huff";
-                
-                return File(rutaDeDescarga, "application/huff","Comprimido"+ aux[0]+".huff");
-               //  return RedirectToAction("/Descargar",modelo.NombreDelArchivo);
 
-            //}
-            //else
-            //{
-            //    return RedirectToAction("/inicio");
-            //}
+         
+                Descargar(aux[0] + ".huff");
+               
+              
 
-            //return View();
+            }
+                       
+                return View();
+            
+
+         
         }
-        //public FileResult Descargar(string nombreDescarga)
-        //{
-        //    string RutaDescarga = Server.MapPath("~/Comprimidos/");
-        //    RutaDescarga += nombreDescarga;
-        //    return File(RutaDescarga, "application/txt", nombreDescarga);
-        //}
+
+        [HttpPost]
+        public ActionResult ArchivoLZW(HttpPostedFileBase fileLZW)
+        {
+            ClaseLZW modelo = new ClaseLZW();
+
+            if(fileLZW != null)
+            {
+                string ruta = Server.MapPath("~/Archivos/");
+                string RutaDescarga = Server.MapPath("~/Comprimidos");
+                ruta += fileLZW.FileName;
+                modelo.CargarArchivo(ruta, fileLZW,RutaDescarga);
+                ViewBag.Correcto = modelo.Exito;
+                ViewBag.Error = modelo.error;
+
+            }
+            return View();
+        }
+        
     }
 }

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "ArchivoLZW";
+}
+
+<h2>ArchivoLZW</h2>
+
+<h2 class="text-danger">@ViewBag.Error</h2>
+<h2 class="text-success">@ViewBag.Correcto</h2>
+<script>
+    function DirrecionComprimir() {
+        document.location.href = "/Huffman/Iniciar";
+    }
+
+</script>
+<style>
+    #Menu {
+        background-color: white;
+        color: black;
+        width: 55%;
+        height: 40%;
+        position: absolute;
+        top: 30%;
+        left: 22%;
+        border-radius: 6px;
+        border: 2px solid black;
+    }
+
+    .bt {
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 14px;
+        color: #000000;
+        background-color: transparent;
+        border-width: 3px;
+        border-style: solid;
+        border-color: #000000;
+        width: 65%;
+        height: 10%;
+        text-align: center;
+    }
+
+    .bt1:hover {
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 14px;
+        color: #000000;
+        background-color: black;
+        border-width: 3px;
+        border-style: solid;
+        border-color: white;
+        color: white;
+        width: 30%;
+        height: 10%;
+        text-align: center;
+    }
+
+    .bt1 {
+        text-decoration: none;
+        font-weight: 400;
+        font-size: 14px;
+        color: #000000;
+        background-color: transparent;
+        border-width: 3px;
+        border-style: solid;
+        border-color: #000000;
+        width: 30%;
+        height: 10%;
+        text-align: center;
+    }
+</style>
+<div id="Menu">
+    <center><h2>Compresion</h2></center><br />
+    <form method="post" enctype="multipart/form-data">
+        <center><input type="file" name="fileLZW" class="bt" required /></center><br />
+        <center>
+            <button type="submit" class="bt1">Comprimir</button>
+            <input type="button" name="but1" value="Inicio" onclick="DirrecionComprimir()" class="bt1" />
+        </center>
+    </form>
+</div>

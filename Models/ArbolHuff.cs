@@ -223,6 +223,8 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 
                 }
             }
+            dicRecorridos.Clear();
+            dicContadorDeCaracteres.Clear();
         }
         public string BusquedaEnRecorrido(char letraReccorrido)
         {
