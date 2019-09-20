@@ -11,6 +11,9 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 {
     public class ClaseLZW
     {
+        const int bufferLenght = 500;
+        public static Dictionary<string, int> dicContadorDeCaracteresOriginales = new Dictionary<string, int>();
+        public static Dictionary<string, int> DiccionarioComplementarioDeCaracteres = new Dictionary<string, int>();
         public string Exito { get; set; }
         public Exception error { get; set; }
         public string Ruta { get; set; }   //Ruta de ubicacion en la carpeta archivos
@@ -26,13 +29,53 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                 this.Ruta = ruta;
                 this.RutaDeDescarga = rutaDeDescarga;
                 this.NombreDelArchivo = file.FileName;
-               // Leer(ruta);  //Enviar al metodo para extraer todos los caracteres y la cantidad de veces que se repita
+                Leer(ruta);
+             
 
             }
             catch (Exception er)
             {
                 this.error = er;
             }
+        }
+        public void Leer(string ruta)
+        {
+            string AuxiliarDeconversion;
+
+            var buffer = new byte[bufferLenght];
+            using (var file = new FileStream(ruta, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(file))
+                {
+                    while (reader.BaseStream.Position != reader.BaseStream.Length)
+                    {
+                        buffer = reader.ReadBytes(bufferLenght);
+                        AuxiliarDeconversion = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+                        foreach (var item in AuxiliarDeconversion)
+                        {
+                            ArmarDiccionarios(item);
+                        }
+
+                    }
+                }
+            }
+           
+            dicContadorDeCaracteresOriginales = dicContadorDeCaracteresOriginales.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+        }
+        void ArmarDiccionarios(char caracterAVerificar)
+        {
+            string verificador = caracterAVerificar.ToString();
+
+            if (dicContadorDeCaracteresOriginales.ContainsKey(verificador))
+            {
+                return;
+            }
+            else
+            {
+                dicContadorDeCaracteresOriginales.Add(verificador, dicContadorDeCaracteresOriginales.Count() + 1);
+            }
+
+
         }
 
     }
