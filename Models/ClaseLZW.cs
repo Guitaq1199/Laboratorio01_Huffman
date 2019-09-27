@@ -28,7 +28,8 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                 this.Exito = "Se ha subido el archivo";
                 this.Ruta = ruta;
                 this.RutaDeDescarga = rutaDeDescarga;
-                this.NombreDelArchivo = file.FileName;
+                string[] auxNombre = file.FileName.Split('.');
+                this.NombreDelArchivo = auxNombre[0];
                 Leer(ruta);
              
 
@@ -59,6 +60,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                     }
                 }
             }
+            DiccionarioComplementarioDeCaracteres = dicContadorDeCaracteresOriginales;
         }
         void ArmarDiccionarios(char caracterAVerificar)
         {
@@ -80,7 +82,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
             string AuxiliarDeconversion;
             string temporalSigBuffer = "";
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/mgrt9/desktop/PHuff.txt", FileMode.Open))
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -98,12 +100,14 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         {
             string aux = "";
             string temporalSigBuffer = "";
-            Queue<int> CombinacionBytes = new Queue<int>();
+
+            string prueba = "";
             string valorDiccionario = "";
             string CadenaTotal = "";
 
             for (int i = 0; i < Cadena.Length; i++)
             {
+              
                 if (DiccionarioComplementarioDeCaracteres.ContainsKey(Cadena[i].ToString()))
                 {
                     valorDiccionario = aux;
@@ -142,8 +146,9 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 
         public void EscribirDiccionario()
         {
-            string rut = RutaDeDescarga + "/" + NombreDelArchivo + "_Comprimido.txt";
-            using (var file = new FileStream(rut, FileMode.Create))
+            
+            this.RutaDeDescarga+= this.NombreDelArchivo + "_Comprimido.txt";
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.Create))
             {
                 using (var escritor = new StreamWriter(file))
                 {
@@ -160,8 +165,8 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         {
             var buffer = new byte[cadena.Length];
             string aux = "";
-            string rut = RutaDeDescarga + "/" + NombreDelArchivo + "_Comprimido.txt";
-            using (var file = new FileStream(rut, FileMode.Append))
+            
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.Append))
             {
                 using (var escritor = new BinaryWriter(file))
                 {

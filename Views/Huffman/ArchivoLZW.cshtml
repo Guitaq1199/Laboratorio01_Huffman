@@ -11,19 +11,42 @@
     function DirrecionComprimir() {
         document.location.href = "/Huffman/Iniciar";
     }
+    function comprimir() {
+         document.getElementById("Desompresion").style.visibility = "hidden";
+        document.getElementById("Compresion").style.visibility = "visible";
+    }
+    function descomprimir() {
+         document.getElementById("Compresion").style.visibility = "hidden";
+        document.getElementById("Desompresion").style.visibility = "visible";
+    }
 
 </script>
 <style>
-    #Menu {
+    #Compresion {
         background-color: white;
         color: black;
-        width: 55%;
+        width: 45%;
         height: 40%;
         position: absolute;
         top: 30%;
-        left: 22%;
+        left: 25%;
         border-radius: 6px;
         border: 2px solid black;
+        visibility:hidden
+
+    }
+     #Desompresion {
+        background-color: white;
+        color: black;
+        width: 45%;
+        height: 40%;
+        position: absolute;
+        top: 30%;
+        left: 25%;
+        border-radius: 6px;
+        border: 2px solid black;
+        visibility:hidden
+
     }
 
     .bt {
@@ -70,11 +93,27 @@
     }
 </style>
 <div id="Menu">
+    <center>
+        <input type="button" value="Compresion" onclick="comprimir()" name="comp" />
+        <input type="button" value="Decompresion" onclick="descomprimir()" name="Descomp" />
+    </center>
+</div>
+<div id="Compresion">
     <center><h2>Compresion</h2></center><br />
     <form method="post" enctype="multipart/form-data">
         <center><input type="file" name="fileLZW" class="bt" required /></center><br />
         <center>
             <button type="submit" class="bt1">Comprimir</button>
+            <input type="button" name="but1" value="Inicio" onclick="DirrecionComprimir()" class="bt1" />
+        </center>
+    </form>
+</div>
+<div id="Desompresion">
+    <center><h2>Descompresion</h2></center><br />
+    <form method="post" enctype="multipart/form-data">
+        <center><input type="file" name="fileDesLZW" class="bt" required /></center><br />
+        <center>
+            <button type="submit" class="bt1">Descomprimir</button>
             <input type="button" name="but1" value="Inicio" onclick="DirrecionComprimir()" class="bt1" />
         </center>
     </form>

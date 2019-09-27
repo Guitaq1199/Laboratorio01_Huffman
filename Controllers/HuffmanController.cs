@@ -24,12 +24,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         {
             return View();
         }
-        public FileResult Descargar(string nombreDescarga)
-        {
-            string RutaDescarga = Server.MapPath("~/Comprimidos/");
-            RutaDescarga += nombreDescarga;
-            return File(RutaDescarga, "application/huff", nombreDescarga);
-        }
+       
         [HttpPost]
         public ActionResult CargaDeArchivo(HttpPostedFileBase file)
         {
@@ -61,22 +56,34 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         }
 
         [HttpPost]
-        public ActionResult ArchivoLZW(HttpPostedFileBase fileLZW)
+        public FileResult ArchivoLZW(HttpPostedFileBase fileLZW)
         {
             ClaseLZW modelo = new ClaseLZW();
 
-            if(fileLZW != null)
-            {
+            modelo.Limpiar();
                 string ruta = Server.MapPath("~/Archivos/");
-                string RutaDescarga = Server.MapPath("~/Comprimidos");
+                string RutaDescarga = Server.MapPath("~/Comprimidos/");
                 ruta += fileLZW.FileName;
                 modelo.CargarArchivo(ruta, fileLZW,RutaDescarga);
                 ViewBag.Correcto = modelo.Exito;
                 ViewBag.Error = modelo.error;
+                modelo.EscribirDiccionario();
+                modelo.compresion();
+                modelo.Limpiar();
+                string[] auxiliarNombre = fileLZW.FileName.Split('.');
+                Descargar(auxiliarNombre[0]);
+           
+                RutaDescarga += auxiliarNombre[0] + "_Comprimido.txt";
+                return File(RutaDescarga, "application/txt", auxiliarNombre[0]);
 
-            }
-            return View();
+     
         }
-        
+        public FileResult Descargar(string nombreDescarga)
+        {
+            string RutaDescarga = Server.MapPath("~/Comprimidos/");
+            RutaDescarga += nombreDescarga + "_Comprimido.txt";
+            return File(RutaDescarga, "application/txt", nombreDescarga);
+        }
+
     }
 }
