@@ -20,6 +20,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         public string NombreDelArchivo { get; set; }  //Nombre del archivo
         public string RutaDeDescarga { get; set; }  //Ruta de ubicacion en la carpeta comprimidos
 
+
         public void CargarArchivo(string ruta, HttpPostedFileBase file, string rutaDeDescarga)
         {
             try
@@ -154,7 +155,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         public void EscribirDiccionario(Dictionary<string, int> dicContadorDeCaracteresOriginales)
         {
 
-            this.RutaDeDescarga+= this.NombreDelArchivo + "_Comprimido.txt";
+            this.RutaDeDescarga+= this.NombreDelArchivo + ".lzw";
             using (var file = new FileStream(this.RutaDeDescarga, FileMode.Create))
             {
                 using (var escritor = new StreamWriter(file))
@@ -200,7 +201,30 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         public void Limpiar()
         {
             DiccionarioComplementarioDeCaracteres.Clear();
+            this.NombreDelArchivo = "";
+            this.Ruta = "";
+            this.RutaDeDescarga = "";
         }
 
+        public void CargarArchivoDescomprimido(string ruta, HttpPostedFileBase file, string rutaDeDescarga)
+        {
+            try
+            {
+                file.SaveAs(ruta);
+                this.Exito = "Se ha subido el archivo";
+                this.Ruta = ruta;
+                this.RutaDeDescarga = rutaDeDescarga;
+                string[] auxNombre = file.FileName.Split('.');
+                this.NombreDelArchivo = auxNombre[0];
+
+
+
+            }
+            catch (Exception er)
+            {
+                this.error = er;
+            }
+        }
     }
+    
 }

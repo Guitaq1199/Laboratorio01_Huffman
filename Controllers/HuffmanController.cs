@@ -24,6 +24,10 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         {
             return View();
         }
+        public ActionResult DescomprimirLZW()
+        {
+            return View();
+        }
        
         [HttpPost]
         public ActionResult CargaDeArchivo(HttpPostedFileBase file)
@@ -43,7 +47,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
                 rutaDeDescarga += aux[0]+ ".huff";
 
          
-                Descargar(aux[0] + ".huff");
+                
                
               
 
@@ -92,19 +96,24 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
             }
             modelo.Limpiar();
                 string[] auxiliarNombre = fileLZW.FileName.Split('.');
-                Descargar(auxiliarNombre[0]);
+               
            
-                RutaDescarga += auxiliarNombre[0] + "_Comprimido.txt";
+                RutaDescarga += auxiliarNombre[0] + ".lzw";
                 return File(RutaDescarga, "application/txt", auxiliarNombre[0]);
 
      
         }
-        public FileResult Descargar(string nombreDescarga)
+        [HttpPost]
+        public ActionResult DescomprimirLZW(HttpPostedFileBase fileDesLZW)
         {
-            string RutaDescarga = Server.MapPath("~/Comprimidos/");
-            RutaDescarga += nombreDescarga + "_Comprimido.txt";
-            return File(RutaDescarga, "application/txt", nombreDescarga);
+            ClaseLZW modelo = new ClaseLZW();
+            string ruta = Server.MapPath("~/Archivos/");
+            string RutaDescarga = Server.MapPath("~/Desomprimidos/");
+            ruta += fileDesLZW.FileName;
+            modelo.CargarArchivoDescomprimido(ruta,fileDesLZW,RutaDescarga);
+            return View();
         }
+       
 
     }
 }

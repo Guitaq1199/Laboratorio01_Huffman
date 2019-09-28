@@ -1,17 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "ArchivoLZW";
+    ViewBag.Title = "DescomprimirLZW";
 }
 
-<h2>ArchivoLZW</h2>
-
+<h2>DescomprimirLZW</h2>
 <h2 class="text-danger">@ViewBag.Error</h2>
 <h2 class="text-success">@ViewBag.Correcto</h2>
 <script>
     function DirrecionComprimir() {
         document.location.href = "/Huffman/Iniciar";
     }
-   
+
 </script>
 <style>
     #Compresion {
@@ -24,10 +23,8 @@
         left: 25%;
         border-radius: 6px;
         border: 2px solid black;
-    
-
     }
-    
+
 
     .bt {
         text-decoration: none;
@@ -74,13 +71,12 @@
 </style>
 
 <div id="Compresion">
-    <center><h2>Compresion</h2></center><br />
-    <form method="post" name="ArchivoLZW" enctype="multipart/form-data">
-        <center><input type="file" name="fileLZW" class="bt" required /></center><br />
+    <center><h2>Descompresion</h2></center><br />
+    <form method="post"  enctype="multipart/form-data">
+        <center><input type="file" name="fileDesLZW" class="bt" required /></center><br />
         <center>
-            <button type="submit" class="bt1">Comprimir</button>
+            <button type="submit" class="bt1">Descomprimir</button>
             <input type="button" name="but1" value="Inicio" onclick="DirrecionComprimir()" class="bt1" />
         </center>
     </form>
 </div>
-

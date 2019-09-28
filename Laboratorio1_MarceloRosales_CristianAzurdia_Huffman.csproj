@@ -169,11 +169,13 @@
     <Content Include="Views\Huffman\Iniciar.cshtml" />
     <Content Include="Views\Huffman\CargaDeArchivo.cshtml" />
     <Content Include="Views\Huffman\ArchivoLZW.cshtml" />
+    <Content Include="Views\Huffman\DescomprimirLZW.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Archivos\" />
     <Folder Include="Comprimidos\" />
+    <Folder Include="Descomprimidos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
