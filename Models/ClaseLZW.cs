@@ -129,8 +129,8 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                         {
                             if (banderaFinal)
                             {
-                                BuscarLenght = DiccionarioComplementarioDeCaracteres[aux].ToString();
-                                CadenaTotal += BuscarLenght.Length + DiccionarioComplementarioDeCaracteres[aux].ToString();
+                                BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                                CadenaTotal += BuscarLenght.Length + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
                             }
                             else
                             {
