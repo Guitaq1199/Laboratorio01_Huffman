@@ -115,6 +115,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
             List<int> NumerosCompletos = modelo.Desencolar();
             modelo.GuardarLista(NumerosCompletos);
             modelo.LeerDescompresionParaDiccionario();
+            modelo.Limpiar();
             return View();
         }
        
