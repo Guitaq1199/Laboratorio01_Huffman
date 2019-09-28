@@ -104,14 +104,23 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
      
         }
         [HttpPost]
-        public ActionResult DescomprimirLZW(HttpPostedFileBase fileDesLZW)
+        public FileResult DescomprimirLZW(HttpPostedFileBase fileDesLZW)
         {
             ClaseLZW modelo = new ClaseLZW();
             string ruta = Server.MapPath("~/Archivos/");
-            string RutaDescarga = Server.MapPath("~/Desomprimidos/");
+            string RutaDescarga = Server.MapPath("~/Descomprimidos/");
             ruta += fileDesLZW.FileName;
             modelo.CargarArchivoDescomprimido(ruta,fileDesLZW,RutaDescarga);
-            return View();
+            modelo.LecturaDesc();
+            List<int> NumerosCompletos = modelo.Desencolar();
+            modelo.GuardarLista(NumerosCompletos);
+            modelo.LeerDescompresionParaDiccionario();
+            string[] auxiliarNombre = fileDesLZW.FileName.Split('.');
+
+
+            RutaDescarga += auxiliarNombre[0] + ".txt";
+            return File(RutaDescarga, "application/txt", auxiliarNombre[0]);
+
         }
        
 
