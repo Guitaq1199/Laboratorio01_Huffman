@@ -122,14 +122,14 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                             DiccionarioComplementarioDeCaracteres.Add(aux, DiccionarioComplementarioDeCaracteres.Count() + 1);
 
                             BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
-                            CadenaTotal += BuscarLenght.ToString() + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                            CadenaTotal += BuscarLenght.Length + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
                         }
                         else // si esta, etonces lo iguala al valor de retorno y retornará
                         {
                             if (banderaFinal)
                             {
                                 BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
-                                CadenaTotal += BuscarLenght.ToString() + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                                CadenaTotal += BuscarLenght.Length + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
                             }
                             else
                             {
