@@ -5,15 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models;
 using System.IO;
+using PruebaHuffman;
 
 
 namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
 {
     public class HuffmanController : Controller
     {
+        
         // GET: Huffman
         public ActionResult Iniciar()
         {
+            LZW objeto = new LZW();
+            
             return View();
         }
         public ActionResult CargaDeArchivo()
@@ -104,19 +108,30 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
      
         }
         [HttpPost]
-        public ActionResult DescomprimirLZW(HttpPostedFileBase fileDesLZW)
+        public FileResult DescomprimirLZW(HttpPostedFileBase fileDesLZW)
         {
-            ClaseLZW modelo = new ClaseLZW();
+            //ClaseLZW modelo = new ClaseLZW();
+            LZW PruebaLZW = new LZW();
             string ruta = Server.MapPath("~/Archivos/");
-            string RutaDescarga = Server.MapPath("~/Desomprimidos/");
+            string RutaDescarga = Server.MapPath("~/Descomprimidos/");
             ruta += fileDesLZW.FileName;
-            modelo.CargarArchivoDescomprimido(ruta,fileDesLZW,RutaDescarga);
-            modelo.LecturaDesc();
-            List<int> NumerosCompletos = modelo.Desencolar();
+            //modelo.CargarArchivoDescomprimido(ruta,fileDesLZW,RutaDescarga);
+            //modelo.LecturaDesc();
+            /*List<int> NumerosCompletos = modelo.Desencolar();
             modelo.GuardarLista(NumerosCompletos);
-            modelo.LeerDescompresionParaDiccionario();
-            modelo.Limpiar();
-            return View();
+            modelo.LeerDescompresionParaDiccionario();*/
+            string[] auxiliarNombre = fileDesLZW.FileName.Split('.'); 
+            PruebaLZW.Leer();
+            PruebaLZW.EscribirDiccionario();
+            PruebaLZW.compresion();
+            // modelo.Mostrar();
+            PruebaLZW.LecturaDesc();
+            List<int> NumerosCompletos = PruebaLZW.Desencolar();
+            PruebaLZW.GuardarLista(NumerosCompletos);
+            PruebaLZW.LeerDescompresionParaDiccionario();
+            RutaDescarga += auxiliarNombre[0] + ".txt";
+            return File(RutaDescarga, "application/txt", auxiliarNombre[0]);
+
         }
        
 
