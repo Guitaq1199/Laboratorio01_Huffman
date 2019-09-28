@@ -60,16 +60,37 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         {
             ClaseLZW modelo = new ClaseLZW();
 
-            modelo.Limpiar();
-                string ruta = Server.MapPath("~/Archivos/");
+            string sobrante = "";
+            List<string> RecorridoDeCadenas = new List<string>();
+            bool BanderaFinal = false;
+            int ContarBuffer = 0;
+            string ruta = Server.MapPath("~/Archivos/");
                 string RutaDescarga = Server.MapPath("~/Comprimidos/");
                 ruta += fileLZW.FileName;
                 modelo.CargarArchivo(ruta, fileLZW,RutaDescarga);
                 ViewBag.Correcto = modelo.Exito;
                 ViewBag.Error = modelo.error;
-                modelo.EscribirDiccionario();
-                modelo.compresion();
-                modelo.Limpiar();
+
+            Dictionary<string, int> diccionarioOriginal = modelo.Leer();
+            modelo.EscribirDiccionario(diccionarioOriginal);
+            List<string> CadenaAComprimir = modelo.compresion(diccionarioOriginal);
+
+            Dictionary<string, int> DiccionarioComplementario = diccionarioOriginal;
+
+            foreach (var item in CadenaAComprimir)
+            {
+                ContarBuffer++;
+                if (ContarBuffer == CadenaAComprimir.Count)
+                {
+                    BanderaFinal = true;
+                }
+                RecorridoDeCadenas.Add(modelo.ArmarDiccionarioDeCaracteresComplementarios(sobrante + item, ref sobrante, BanderaFinal));
+            }
+            foreach (var item in RecorridoDeCadenas)
+            {
+                modelo.Escritura(item);
+            }
+            modelo.Limpiar();
                 string[] auxiliarNombre = fileLZW.FileName.Split('.');
                 Descargar(auxiliarNombre[0]);
            

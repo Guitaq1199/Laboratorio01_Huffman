@@ -11,9 +11,9 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 {
     public class ClaseLZW
     {
-        const int bufferLenght = 500;
-        public static Dictionary<string, int> dicContadorDeCaracteresOriginales = new Dictionary<string, int>();
         public static Dictionary<string, int> DiccionarioComplementarioDeCaracteres = new Dictionary<string, int>();
+        public static Queue<string> Numeros = new Queue<string>();
+        const int bufferLenght = 500;
         public string Exito { get; set; }
         public Exception error { get; set; }
         public string Ruta { get; set; }   //Ruta de ubicacion en la carpeta archivos
@@ -30,7 +30,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                 this.RutaDeDescarga = rutaDeDescarga;
                 string[] auxNombre = file.FileName.Split('.');
                 this.NombreDelArchivo = auxNombre[0];
-                Leer(ruta);
+              
              
 
             }
@@ -39,48 +39,10 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                 this.error = er;
             }
         }
-        public void Leer(string ruta)
+        public Dictionary<string,int> Leer()
         {
             string AuxiliarDeconversion;
-
-            var buffer = new byte[bufferLenght];
-            using (var file = new FileStream(ruta, FileMode.Open))
-            {
-                using (var reader = new BinaryReader(file))
-                {
-                    while (reader.BaseStream.Position != reader.BaseStream.Length)
-                    {
-                        buffer = reader.ReadBytes(bufferLenght);
-                        AuxiliarDeconversion = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-                        foreach (var item in AuxiliarDeconversion)
-                        {
-                            ArmarDiccionarios(item);
-                        }
-
-                    }
-                }
-            }
-            DiccionarioComplementarioDeCaracteres = dicContadorDeCaracteresOriginales;
-        }
-        void ArmarDiccionarios(char caracterAVerificar)
-        {
-            string verificador = caracterAVerificar.ToString();
-
-            if (dicContadorDeCaracteresOriginales.ContainsKey(verificador))
-            {
-                return;
-            }
-            else
-            {
-                dicContadorDeCaracteresOriginales.Add(verificador, dicContadorDeCaracteresOriginales.Count() + 1);
-            }
-
-
-        }
-        public void compresion()
-        {
-            string AuxiliarDeconversion;
-            string temporalSigBuffer = "";
+            Dictionary<string, int> dicContadorDeCaracteresOriginales = new Dictionary<string, int>();
             var buffer = new byte[bufferLenght];
             using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
@@ -90,24 +52,52 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                     {
                         buffer = reader.ReadBytes(bufferLenght);
                         AuxiliarDeconversion = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+                        foreach (var item in AuxiliarDeconversion)
+                        {
+                            if (!dicContadorDeCaracteresOriginales.ContainsKey(item.ToString()))
+                            {
+                                dicContadorDeCaracteresOriginales.Add(item.ToString(), dicContadorDeCaracteresOriginales.Count() + 1);
+                            }
 
-                        temporalSigBuffer = ArmarDiccionarioDeCaracteresComplementarios(temporalSigBuffer + AuxiliarDeconversion);
+                        }
+
                     }
                 }
             }
+            return dicContadorDeCaracteresOriginales;
         }
-        public string ArmarDiccionarioDeCaracteresComplementarios(string Cadena)
+
+        public List<string> compresion(Dictionary<string, int> diccionarioOriginal) // Metodo para extraer cadenas en lista del archivo
+        {
+            DiccionarioComplementarioDeCaracteres = diccionarioOriginal;
+            string AuxiliarDeconversion;
+            var buffer = new byte[bufferLenght];
+            List<string> CadenaAComprimir = new List<string>();
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
+            {
+                using (var reader = new BinaryReader(file))
+                {
+                    while (reader.BaseStream.Position != reader.BaseStream.Length)
+                    {
+                        buffer = reader.ReadBytes(bufferLenght);
+                        AuxiliarDeconversion = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+                        CadenaAComprimir.Add(AuxiliarDeconversion);
+
+                    }
+                }
+            }
+            return CadenaAComprimir;
+        }
+        public string ArmarDiccionarioDeCaracteresComplementarios(string Cadena, ref string temporalSigBuffer, bool banderaFinal) // Metodo para generar los recorridos numericos
         {
             string aux = "";
-            string temporalSigBuffer = "";
-
-            string prueba = "";
+            bool BanderaTemporal = false;
+            string BuscarLenght = "";
             string valorDiccionario = "";
             string CadenaTotal = "";
 
             for (int i = 0; i < Cadena.Length; i++)
             {
-              
                 if (DiccionarioComplementarioDeCaracteres.ContainsKey(Cadena[i].ToString()))
                 {
                     valorDiccionario = aux;
@@ -119,7 +109,8 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 
                             DiccionarioComplementarioDeCaracteres.Add(aux, DiccionarioComplementarioDeCaracteres.Count() + 1);
                             aux = Cadena[i].ToString();
-                            CadenaTotal += DiccionarioComplementarioDeCaracteres[valorDiccionario];
+                            BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                            CadenaTotal += BuscarLenght.Length + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
 
                         }
                     }
@@ -129,24 +120,40 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
                         if (!DiccionarioComplementarioDeCaracteres.ContainsKey(aux)) // verifica si no esta, entonces lo agrega
                         {
                             DiccionarioComplementarioDeCaracteres.Add(aux, DiccionarioComplementarioDeCaracteres.Count() + 1);
-                            CadenaTotal += DiccionarioComplementarioDeCaracteres[valorDiccionario];
+
+                            BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                            CadenaTotal += BuscarLenght.ToString() + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
                         }
                         else // si esta, etonces lo iguala al valor de retorno y retornará
                         {
-                            temporalSigBuffer = aux;
+                            if (banderaFinal)
+                            {
+                                BuscarLenght = DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                                CadenaTotal += BuscarLenght.ToString() + DiccionarioComplementarioDeCaracteres[valorDiccionario].ToString();
+                            }
+                            else
+                            {
+                                temporalSigBuffer = aux;
+                                BanderaTemporal = true;
+                            }
+
                         }
                     }
                 }
             }
+            if (!BanderaTemporal)
+            {
+                temporalSigBuffer = "";
+            }
 
-            Escritura(CadenaTotal);
-            return temporalSigBuffer;
+
+            return CadenaTotal;
         }
 
 
-        public void EscribirDiccionario()
+        public void EscribirDiccionario(Dictionary<string, int> dicContadorDeCaracteresOriginales)
         {
-            
+
             this.RutaDeDescarga+= this.NombreDelArchivo + "_Comprimido.txt";
             using (var file = new FileStream(this.RutaDeDescarga, FileMode.Create))
             {
@@ -161,7 +168,7 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
 
             }
         }
-        void Escritura(string cadena)
+        public void Escritura(string cadena)
         {
             var buffer = new byte[cadena.Length];
             string aux = "";
@@ -193,7 +200,6 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Models
         public void Limpiar()
         {
             DiccionarioComplementarioDeCaracteres.Clear();
-            dicContadorDeCaracteresOriginales.Clear();
         }
 
     }

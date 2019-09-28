@@ -1,0 +1,191 @@
+El dato es una representacion simbolica que no representa ningun tipo de información pero se pueden asociar para convertirse en informacion
+
+La informacion son un conjunto de datos significativos y para que sean signicativos necesitan
+  -simbolos reconocibles
+  -ingregos
+  -Expresar ideas no ambiguas
+
+Datos -> informacion -> conocimiento ->inteligencia
+
+Archivo: Es una coleccion de bytes que representa datos, que luego se convierten en informacion
+y que normalmente se guarda en almacenamiento secundario
+
+Tipos de ruta: absoluta y relativa
+
+Archivo fiscio: archivo como existe en el almacenamiento secundario
+Archivo logico: archvio que se modificara en un programa pero que no cambia el archivo fisico 
+
+Que interesa de un archivo: tipo de archivo, programa para manipularlo, ruta de acceso y propiedades
+
+Sistemas de archivos: 
+  -Regulares
+  -Directorios
+  -Especiales
+
+Proceso para almacenar
+   -Enviar direccion de datos
+   -Controlador encuentra ubicacion
+   -Enviar datos
+
+Proceso para lectrua
+  -Envia direccion de los datos
+  -Encuentra los bits de informacion
+  -Los envia al bus de datos de procesador
+
+Clasificacion de los medios de almacenamiento:
+   -Velocidad para acceder a los datos
+   -Costo de adquisicion
+   -Fiabilidad
+
+Objetivos de la memoria cache: Almacenar una serie de instrucciones y datos a los que el procesador accede continuamente, con
+la finalidad de que estos accesos sean instantaneos. Otro es el rendimiento
+ 
+Caracteristicas del cache:
+   -Almacenamiento de datos e instrucciones rapidas
+   -Tipo de memorai volatil pero de gran velocidad
+   -Tareas repetitivas
+   -Integrada en el procesador
+
+Cache tipos: 
+    L1: En el procesador, dividida en una para direcciones y otra para datos
+    L2: utilizada mas para programas, en el procesador pero no en el nucleo >2mb
+
+Tipos de directorio:
+  -Jerarquico 
+  -Plano
+
+Almacenamiento segun el tipo de acceso:
+   -Acceso secuencia: no se pueden llegar a posiciones particulares
+   -Acceso directo: permiten el acceso en la posicoin en la que estan los datos
+
+   Metodo de grabacion en cintas: lineal y helical
+
+Almacenamineto en disco: las unidades de disco consisten en un conjunto de cabezas de lectura y escritura
+Componentes:
+   -pista: conjunto de bytes en la superficie de un disco al que puede acceder sin mover el brazo
+   -Sector: Es la porcion mas pequeña, a la cual puede hacer referencua en un disco
+   -cilindro: pustas una sobre otras, tiene acceso a toda la informacion sin mover el brazo
+
+Interfaza del disco duro: conexion fisica y funcional entre dos aparatos o sistemas independientes.
+Uno es el disco duro y el otro a lo que esta conectado.
+
+Estandares de normalizacion de interfaces ocn los discos duros: IDE y SATA
+
+  Sata(Seriel Ata): Econtrada en computadoras de escritorio y laptos de utlima generacion. utilizan bus de tipo serie
+   Velocidades: -Sata 1(150 MB/S)
+                -Sata 2(300)
+                -Sata 3(600)
+
+  Interfaz: 
+      -SCSI: alta velocidad de rotacion y capacidad de almacenamiento. puede trabajar asincronamente con respecto al micropocesador
+       incrementando la velocidad de trasnferencia
+      -SAS: permite la conexion y desconexion en caliente e incrementa la velocidad de trasnferencia la aumentar la cantidad
+       de dispositivos conectados
+
+BUFFER: cunado se encuentra un byte, la RAM lo pone en un area llamada buffer y luego encuentra dentro de ese buffer lo solicitado
+
+Analizador sintactico: validacion en forma de arbol de las consultas generadas por le usuario, siguietno reglas que describel el lenguaje.
+Se utiliza para validar que la consulta tenga un orden valido, valida la cadena de "token" ingresados
+
+Selector de estrategias: software que trasnforma una consulta del usuario en una forma efectiva para su posterior ejecucion
+
+Manejador del buffer: controla el movimiento de datos entre la memoria principal y el almacenamiento en disco
+(intermediario de disco duro a RAM)
+
+Sistema de archivos: soporte al administrador de buffer. Localizacion del almacenamietno en disco, suministradno una vision "logica" de los datos
+   -Usuario: acceso universal
+   -Desarrollador: unico desarrollo con multitud de aplicaciones
+   -brindar una interfaz favorable
+   - suministrar una vision logica de los datos y de las funciones que seran ejecutadas, en vez de una vision fisica
+
+
+Componentes del sistema de archivo
+   -Metodos de acceso: relacionados con la manera de acceder a los datos almacenados
+   -Administracion del archivo: mecanismos para que los archivos sean almacenados, referencias, compartidos y asegurados
+   -Administracion del almacenamiento secundario y terceario:  asignacion de espacio
+   -Ingegridad de datos: garantiza la integridad de la ifnoramcion almacenada
+
+
+Para liberar espacio se tiene que tomar en cuenta la forma de almacenamietno asi como la fragementacion creciente en el disco
+Para alivear la fragmentacion: 
+     -Condensacion: reorganizar expresamente o automaticamente los archivos segu algun criterio predefinido
+     -Recoleccion de basura: elimina los archivos inservibles
+
+
+  ""El aspecto clave de la implementacion de archivos es el regirstro de los bloques
+                             asociados a cada archivo"""
+
+
+
+Asignacion de espacio  ->contigua
+                       ->No contigua ->Encadenamiento de bloques
+                                     ->Encadenamiento de bloques de indices
+                                     ->Transformacion de archivos orientados hacia bloques
+                                     ->Esquema de un nodo i
+
+
+Asignacion contigua:archvios asignacios a areas contiguas. Facil implementacion pero se debe conocer el tamaño del archivo para crearlo y produce una gran fragmentacio
+
+Asignacion no contigua: 
+   1.Encadenamientos de bloqeus: entradas en el directorio que apuntan al primer bloque de cada archivo. 
+     Contienen; bloque de datos, apuntador al nodo siguiente. Cada bloque contiene varios sectores. El tamaño de un bloque corresponde 
+     con el de una pista completa del disco
+   2.Encadenamietno de bloques de indice: aputnadores colocados en barios bloqeus, cada bloque de indices contiene un numero fijo de elmentos
+   3.Trasnformacion de archivos orientada hacia bloques: se utilizan numeros de bloques en vez de aputandores
+     se conserva un mapa del archivo, contenineod una entrada para cada bloque del disco. Las entradas en el directorio 
+     apuntada a la primera entrada al mapa del archivo. Cada entrada al mapa del archivo contiene el nuermo de bloque siguiente de ese archivo 
+   4.Nodos I: se crea una tabla que contiene los atributos y direciones en disco. Se traslada del disoc a la memora prinicoal al abrir el archivo
+     depende del tamaño puede que toda la ifnormacion este en el nodo-i pero si es muy grande guardara direcciones a otros bloqeues que pueden ser:
+           -Simplemente indirecto (2048 punteros directos
+           -doblemnete indirecto
+           -Triplemente indirecto
+
+
+Seguridad: los esquemas de proteccion se basan en la hipotesis de que el sistema conoce la identidad del usuario 
+     
+ Metodos de autenticacion: 
+    -La identificacion de algo conocido por el usuario
+    -Algo que posee el usuario
+    -Algo que es del usaurio
+
+Respaldo y recuperacion:
+   -respaldos periodicos
+   -Copiar en otro disoc
+   -respaldo incremental
+
+
+1. Copia completa: copia todos los archivos cada vez que se lanza el proceso
+2. Copia diferencial: copia unicamente los archivos modificados o creados desde la ltima copia
+3. Copia incremental: copia los ficheros creados o modificados desde el ultimo backup, ya sea completo o incremntal
+   reduciendo la informacion a copiar en cada proceso
+
+
+El descriptor de archivos o bloque de control de archvios, son los datos que el sistema necesita para administrar
+dicho archivo
+
+Contenido del archivo: registros 
+                       formacion abstracta
+
+ 
+Principios de la seguridad informatica: 
+   -Integridad
+   -confidencialidad 
+   -Disponibilidad 
+   -autenticacion
+
+vulnerabilidad: debilidad o grado de exposicion que puede llegar a existir
+
+Entre mas avance tecnologico mas propensos a vulnerabilidades seremos
+
+
+Tipos de seguridad: 
+  -Seguridad online
+  -Seguridad en software
+  -seguridad en hardware
+  -seguridad logica
+
+Teconologias de seguridad
+  -Controles de acceso adaptatico
+  -analisis de seguridad de big data
+
+
