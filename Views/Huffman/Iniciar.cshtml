@@ -10,6 +10,14 @@
     {
         document.location.href = "/Huffman/CargaDeArchivo";
     }
+     function DirrecionComprimir2()
+    {
+        document.location.href = "/Huffman/ArchivoLZW";
+    }
+     function Descomprimir2()
+    {
+        document.location.href = "/Huffman/DescomprimirLZW";
+    }
 
 </script>
 
@@ -18,7 +26,7 @@
             background-color: white;
             color: black;
             width: 25%;
-            height: 50%;
+            height: 60%;
             position: absolute;
             top: 30%;
             left: 35%;
@@ -56,6 +64,7 @@
 <div id="Menu">
     <br />
     <center><h2 style="text-align:center">Huffman</h2></center><br /><br />
-    <center> <input type="button" name="but1" value="Comprimir" onclick="DirrecionComprimir()" class="bt" /></center><br /><br />
-    <center> <input type="button" name="butDescompresion" value="Descomprimir" onclick="DirrecionComprimir()" class="bt" /></center>
+    <center> <input type="button" name="but1" value="Huffman" onclick="DirrecionComprimir()" class="bt" /></center><br /><br />
+    <center> <input type="button" name="butcompresion" value="LZW compresion" onclick="DirrecionComprimir2()" class="bt" /></center><br /><br />
+    <center> <input type="button" name="butDescompresion2" value="LZW descompresion" onclick=" Descomprimir2()" class="bt" /></center>
 </div>

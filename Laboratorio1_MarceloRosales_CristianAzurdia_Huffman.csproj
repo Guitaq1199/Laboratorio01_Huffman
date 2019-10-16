@@ -126,6 +126,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ArbolHuff.cs" />
+    <Compile Include="Models\ClaseLZW.cs" />
     <Compile Include="Models\Nodo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -167,11 +168,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Huffman\Iniciar.cshtml" />
     <Content Include="Views\Huffman\CargaDeArchivo.cshtml" />
+    <Content Include="Views\Huffman\ArchivoLZW.cshtml" />
+    <Content Include="Views\Huffman\DescomprimirLZW.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Archivos\" />
     <Folder Include="Comprimidos\" />
+    <Folder Include="Descomprimidos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -185,6 +189,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LZWCompressor\LZWCompressor.csproj">
+      <Project>{17cef24d-8b15-403f-93a1-96d00e3e1de3}</Project>
+      <Name>LZWCompressor</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

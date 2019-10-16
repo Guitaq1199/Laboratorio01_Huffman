@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29230.47
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratorio1_MarceloRosales_CristianAzurdia_Huffman", "Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.csproj", "{5A7DF680-DE8C-4AA9-B4F9-413856FB64F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LZWCompressor", "LZWCompressor\LZWCompressor.csproj", "{17CEF24D-8B15-403F-93A1-96D00E3E1DE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5A7DF680-DE8C-4AA9-B4F9-413856FB64F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A7DF680-DE8C-4AA9-B4F9-413856FB64F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A7DF680-DE8C-4AA9-B4F9-413856FB64F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17CEF24D-8B15-403F-93A1-96D00E3E1DE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17CEF24D-8B15-403F-93A1-96D00E3E1DE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17CEF24D-8B15-403F-93A1-96D00E3E1DE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17CEF24D-8B15-403F-93A1-96D00E3E1DE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
