@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.IO;
-
+using System.Web;
 
 namespace PruebaHuffman
 {
@@ -15,12 +15,36 @@ namespace PruebaHuffman
         public Dictionary<int, string> dicRecorridosDescompresion = new Dictionary<int, string>();
         public static Queue<string> Numeros = new Queue<string>();
         const int bufferLenght = 500;
+        public string Exito { get; set; }
+        public Exception error { get; set; }
+        public string Ruta { get; set; }   //Ruta de ubicacion en la carpeta archivos
+        public string NombreDelArchivo { get; set; }  //Nombre del archivo
+        public string RutaDeDescarga { get; set; }  //Ruta de ubicacion en la carpeta comprimidos
+
+        public void ReceptorNombreArchivo (string Nombre)
+        {
+            NombreDelArchivo = Nombre;
+        }
+
+        public void CargarArchivo(string ruta, string rutaDeDescarga)
+        {
+            try
+            {
+                this.Exito = "Se ha subido el archivo";
+                this.Ruta = ruta;
+                this.RutaDeDescarga = rutaDeDescarga;
+            }
+            catch (Exception er)
+            {
+                this.error = er;
+            }
+        }
         public void Leer()
         {
             string AuxiliarDeconversion;
 
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/PruebaDiegolzw.txt", FileMode.Open))
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -60,7 +84,7 @@ namespace PruebaHuffman
             string AuxiliarDeconversion;
             string temporalSigBuffer = "";
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/PruebaDiegolzw.txt", FileMode.Open))
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -133,7 +157,8 @@ namespace PruebaHuffman
         }
         public void EscribirDiccionario()
         {
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/archivo2.lzw", FileMode.Create))
+            this.RutaDeDescarga += this.NombreDelArchivo + ".lzw";
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.Create))
             {
                 using (var escritor = new StreamWriter(file))
                 {
@@ -151,7 +176,7 @@ namespace PruebaHuffman
             int x;
             var buffer = new byte[cadena.Length];
             string aux = "";
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/archivo2.lzw", FileMode.Append))
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.Append))
             {
                 using (var escritor = new BinaryWriter(file))
                 {
@@ -190,7 +215,7 @@ namespace PruebaHuffman
 
             bool bandera = true;
             var buffer = new byte[bufferLenght];
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/archivo2.lzw", FileMode.Open))
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -247,7 +272,6 @@ namespace PruebaHuffman
         public void añadir(int x)
         {
             Numeros.Enqueue(x.ToString());
-
         }
         public List<int> Desencolar()
         {
@@ -262,8 +286,15 @@ namespace PruebaHuffman
                     cadena += Numeros.Dequeue();
 
                 }
-                NumerosCompletos.Add(Convert.ToInt32(cadena));
-                cadena = "";
+                if (cadena != "")
+                {
+                    NumerosCompletos.Add(Convert.ToInt32(cadena));
+                    cadena = "";
+                }
+                else if (cadena == "")
+                {
+                    break;
+                }
             }
             return NumerosCompletos;
         }
@@ -276,7 +307,7 @@ namespace PruebaHuffman
 
             var buffer = new byte[bufferLenght];
             bool bandera = true;
-            using (var file = new FileStream("C:/Users/Azurdia/Desktop/archivo2.lzw", FileMode.Open))
+            using (var file = new FileStream(this.Ruta, FileMode.Open))
             {
                 using (var reader = new BinaryReader(file))
                 {
@@ -383,9 +414,8 @@ namespace PruebaHuffman
         public void EscribirTextoDescomprimido(string texto)
         {
             Descomprimido = Descomprimir(texto);
-
-
-            using (var file = new FileStream("C:/Users/Azurdia/desktop/ArchivoDescomprimido.txt", FileMode.OpenOrCreate))
+            this.RutaDeDescarga += this.NombreDelArchivo + ".lzw";
+            using (var file = new FileStream(this.RutaDeDescarga, FileMode.OpenOrCreate))
             {
                 using (var escritor = new StreamWriter(file))
                 {

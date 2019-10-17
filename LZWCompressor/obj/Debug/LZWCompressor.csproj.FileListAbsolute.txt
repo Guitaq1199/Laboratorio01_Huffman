@@ -3,3 +3,9 @@ C:\Users\Azurdia\Desktop\Laboratorio01_Huffman-laboratorioLZW\LZWCompressor\bin\
 C:\Users\Azurdia\Desktop\Laboratorio01_Huffman-laboratorioLZW\LZWCompressor\bin\Debug\LZWCompressor.pdb
 C:\Users\Azurdia\Desktop\Laboratorio01_Huffman-laboratorioLZW\LZWCompressor\obj\Debug\LZWCompressor.dll
 C:\Users\Azurdia\Desktop\Laboratorio01_Huffman-laboratorioLZW\LZWCompressor\obj\Debug\LZWCompressor.pdb
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\bin\Debug\LZWCompressor.dll
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\bin\Debug\LZWCompressor.pdb
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\obj\Debug\LZWCompressor.csprojAssemblyReference.cache
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\obj\Debug\LZWCompressor.csproj.CoreCompileInputs.cache
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\obj\Debug\LZWCompressor.dll
+C:\Users\Azurdia\Desktop\Laboratorio01_Huffman\LZWCompressor\obj\Debug\LZWCompressor.pdb

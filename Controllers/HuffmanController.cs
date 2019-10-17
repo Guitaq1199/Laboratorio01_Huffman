@@ -112,26 +112,20 @@ namespace Laboratorio1_MarceloRosales_CristianAzurdia_Huffman.Controllers
         {
             //ClaseLZW modelo = new ClaseLZW();
             LZW PruebaLZW = new LZW();
-            string ruta = Server.MapPath("~/Archivos/");
+            ClaseLZW Modelo = new ClaseLZW();
+            string ruta = Server.MapPath("~/Comprimidos/");
             string RutaDescarga = Server.MapPath("~/Descomprimidos/");
             ruta += fileDesLZW.FileName;
-            //modelo.CargarArchivoDescomprimido(ruta,fileDesLZW,RutaDescarga);
-            //modelo.LecturaDesc();
-            /*List<int> NumerosCompletos = modelo.Desencolar();
-            modelo.GuardarLista(NumerosCompletos);
-            modelo.LeerDescompresionParaDiccionario();*/
-            string[] auxiliarNombre = fileDesLZW.FileName.Split('.'); 
-            PruebaLZW.Leer();
-            PruebaLZW.EscribirDiccionario();
-            PruebaLZW.compresion();
-            // modelo.Mostrar();
+            string[] auxiliarNombre = fileDesLZW.FileName.Split('.');
+            string[] Aux = fileDesLZW.FileName.Split('.');
+            PruebaLZW.ReceptorNombreArchivo(auxiliarNombre[0]);
+            PruebaLZW.CargarArchivo(ruta, RutaDescarga);
             PruebaLZW.LecturaDesc();
             List<int> NumerosCompletos = PruebaLZW.Desencolar();
             PruebaLZW.GuardarLista(NumerosCompletos);
             PruebaLZW.LeerDescompresionParaDiccionario();
-            RutaDescarga += auxiliarNombre[0] + ".txt";
+            RutaDescarga += auxiliarNombre[0] + ".lzw";
             return File(RutaDescarga, "application/txt", auxiliarNombre[0]);
-
         }
        
 
